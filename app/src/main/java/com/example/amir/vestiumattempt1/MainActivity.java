@@ -18,10 +18,13 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
+    // this is the final tag for intent
     static final int REQUEST_TAKE_PHOTO = 1;
     ImageView imageView;
 
+    // this is the path of the taken image
     String mCurrentPhotoPath;
+    // this is the uri of the taken image
     Uri photoURI;
 
     @Override
@@ -29,19 +32,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // imageview
+        // initializes properties
        imageView = (ImageView) findViewById(R.id.imageView);
-
        mCurrentPhotoPath = "";
 
     }
 
-
+    // calls dispatchTakePictureIntent() which is from android's website
     public void onClick(View view) {
         dispatchTakePictureIntent();
 
     }
 
+    // this one is called automatically after activity results
    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
        imageView.setImageURI( photoURI);
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 */
 
 
-
+    // this one creates a unique name to our newly taken image
     private File createImageFile() throws IOException {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -73,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
         return image;
     }
 
+    // this one uses an intent to take a pic and store it in the private directory in
+    // apps path using the unique name made by createImageFile method
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
